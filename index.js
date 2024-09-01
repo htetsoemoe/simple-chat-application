@@ -15,5 +15,12 @@ const server = app.listen(3500, () => {
 /** Socket Setup */
 const io = socket(server)
 io.on('connection', (socket) => {
-    console.log(`socket connection established : socket-id => ${socket.id}`)
+    // console.log(`socket connection established : socket-id => ${socket.id}`)
+
+    /** socket server listen 'chat' event with 'data' from client(socket) and
+     *  sent that event and data to other clients(sockets)
+     */
+    socket.on('chat', (data) => {
+        io.sockets.emit("chat", data)
+    })
 })
