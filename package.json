@@ -1,0 +1,19 @@
+{
+  "name": "simple-chat-application",
+  "version": "1.0.0",
+  "description": "Building simple chat application with express.js and socket.io",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
