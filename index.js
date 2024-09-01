@@ -17,10 +17,19 @@ const io = socket(server)
 io.on('connection', (socket) => {
     // console.log(`socket connection established : socket-id => ${socket.id}`)
 
-    /** socket server listen 'chat' event with 'data' from client(socket) and
+    /** 
+     *  socket server listen 'chat' event with 'data' from client(socket) and
      *  sent that event and data to other clients(sockets)
      */
     socket.on('chat', (data) => {
         io.sockets.emit("chat", data)
+    })
+
+    /**
+     *  socket server listen 'typing' event with 'name' from client(socket) and
+     *  broadcast that 'name' to other clients(sockets) excluding senderClient(socket)
+     */
+    socket.on('typing', (name) => {
+        socket.broadcast.emit('typing', name)
     })
 })

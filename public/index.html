@@ -105,6 +105,7 @@
         let message = document.getElementById('message')
         let name = document.getElementById('name')
         let send = document.getElementById('send')
+        let feedback = document.getElementById('feedback')
 
         /** User clicked `Send` button emit `chat` event with data to socket server **/
         send.addEventListener('click', () => {
@@ -117,11 +118,26 @@
             socket.emit("chat", data)
         })
 
+        /** When user is typing */
+        message.addEventListener('keypress', () => {
+            socket.emit("typing", name.value)
+        })
+
         /** Listen events from socket server */
         socket.on('chat', (data) => {
             output.innerHTML += `<p><strong>${data.name}</strong> : ${data.message}</p>`
             name.value = ""
             message.value = ""
+            // when client already send message, need to clear feedback
+            feedback.innerHTML = ""
+        })
+
+        socket.on('typing', (name) => {
+            feedback.innerHTML = `<p><em>${name}</em> is typing...</p>`
+            // When client stop writing but not send a message to others, need to clear feedback in 3 seconds after stop typing
+            setTimeout(() => {
+                feedback.innerHTML = ""
+            }, 3000)
         })
     </script>
 </body>
